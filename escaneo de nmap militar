@@ -10,3 +10,11 @@ for line in $(cat lista-varios.txt)
 		nmap --script $line -d 192.168.1.36
 		echo -e "/t /t /n /n /n" "FIN DE SCAN de <-- $line" "/n /n /n /n /n"
 	done
+
+
+# primero analizo los puertos abiertos
+# despues entro a los scripts de nmap --> locate .nse 
+# dentro de esta ruta busco los scripts para cada puerto que encontre abierto (ls -l | grep ssh)
+# creo un nano .txt (ej: lista-varios.txt) y adentro le copio los nombres de los scripts encontrados separados por un espacio
+# creo el bash
+# ./script.sh
