@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Leyendo el archivo lista-varios.txt, utilizando cat"
+
+content = 'cat lista-varios.txt'
+
+for line in $(cat lista-varios.txt)
+	do
+		echo -e "/t /t /n "  "--> lanzamiento de $line" "/n /n /n"
+		nmap --script $line -d 192.168.1.36
+		echo -e "/t /t /n /n /n" "FIN DE SCAN de <-- $line" "/n /n /n /n /n"
+	done
